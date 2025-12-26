@@ -35,7 +35,7 @@ namespace SynapseZAPI
 
             if (!Directory.Exists(BinPath))
             {
-                LatestErrorMsg = "Could not find the Bin Folder!";
+                LatestErrorMsg = "Bin Folder not found";
                 return 1;
             }
 
@@ -43,7 +43,7 @@ namespace SynapseZAPI
 
             if (!Directory.Exists(SchedulerPath))
             {
-                LatestErrorMsg = "Could not find the Scheduler Folder!";
+                LatestErrorMsg = "Scheduler Folder not found";
                 return 2;
             }
 
@@ -75,7 +75,7 @@ namespace SynapseZAPI
 
             if (accKey == "")
             {
-                LatestErrorMsg = "Could not find Account Key!";
+                LatestErrorMsg = "Could not find Account Key";
                 return null;
             }
 
@@ -110,7 +110,7 @@ namespace SynapseZAPI
 
             if (accKey == "")
             {
-                LatestErrorMsg = "Could not find Account Key!";
+                LatestErrorMsg = "Could not find Account Key";
                 return -1;
             }
 
@@ -125,7 +125,7 @@ namespace SynapseZAPI
             {
                 if (response.StatusCode.ToString() == "Forbidden")
                 {
-                    LatestErrorMsg = "Invalid License!";
+                    LatestErrorMsg = "Invalid License";
                     return -3;
                 }
 
@@ -139,7 +139,7 @@ namespace SynapseZAPI
                 return 0;
             
 
-            LatestErrorMsg = "Invalid License!";
+            LatestErrorMsg = "Invalid License";
             return -3;
         }
 
@@ -157,7 +157,7 @@ namespace SynapseZAPI
 
             if (accKey == "")
             {
-                LatestErrorMsg = "Could not find Account Key!";
+                LatestErrorMsg = "Could not find Account Key";
                 return -1;
             }
 
@@ -172,10 +172,10 @@ namespace SynapseZAPI
                 case "418":
                     return 0;
                 case "429":
-                    LatestErrorMsg = "Cooldown active!";
+                    LatestErrorMsg = "Cooldown";
                     return -3;
                 case "Forbidden":
-                    LatestErrorMsg = "You are blacklisted from using this feature!";
+                    LatestErrorMsg = "Blacklisted";
                     return -4;
                 default:
                     LatestErrorMsg = "API Error: " + response.StatusCode.ToString();
