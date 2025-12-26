@@ -1,6 +1,7 @@
 # SynapseZ-API
 
-This API uses .NET-Framework 4.8!
+This API was developed in .NET-Framework 4.8!
+You might need to adjust it to make it work for your version.
 
 ## How to initialize:
 ```cs
