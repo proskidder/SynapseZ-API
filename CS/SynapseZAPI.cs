@@ -223,7 +223,7 @@ namespace SynapseZ
             * Return values:
             * bool - If the Instance is a SynZ Instance
         */
-        public static Nullable<bool> IsSynz(int PID = 0)
+        public static bool IsSynz(int PID = 0)
         {
             List<Process> injectedProcesses = GetSynzRobloxInstances();
 
@@ -241,7 +241,7 @@ namespace SynapseZ
             * Return values:
             * bool - If all Roblox Instances are SynZ Instances
         */
-        public static Nullable<bool> AreAllInstancesSynz()
+        public static bool AreAllInstancesSynz()
         {
             Process[] processes = GetRobloxProcesses();
             if (processes.Length == 0) return false;
