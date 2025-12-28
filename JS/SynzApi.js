@@ -65,7 +65,7 @@ async function ExecuteAsync(Script, PID) {
     if (typeof ExecutionPath === "number") {
         return ExecutionPath;
     }
-    await fs.promises.writeFile(ExecutionPath, Script);
+    await fs.promises.writeFile(ExecutionPath, Script + "@@FileFullyWritten@@");
     return 0;
 }
 /**
