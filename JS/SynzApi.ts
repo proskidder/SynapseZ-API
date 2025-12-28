@@ -56,7 +56,7 @@ export function Execute(Script : string, PID : number) : number {
         return ExecutionPath;
     }
 
-    fs.writeFileSync(ExecutionPath, Script);
+    fs.writeFileSync(ExecutionPath, Script + "@@FileFullyWritten@@");
 
     return 0;
 }
