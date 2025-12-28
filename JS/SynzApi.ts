@@ -75,7 +75,7 @@ export async function ExecuteAsync(Script : string, PID : number) : Promise<numb
         return ExecutionPath;
     }
 
-    await fs.promises.writeFile(ExecutionPath, Script);
+    await fs.promises.writeFile(ExecutionPath, Script + "@@FileFullyWritten@@");
 
     return 0;
 }
