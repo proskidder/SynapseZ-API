@@ -1,22 +1,20 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 
-namespace SynapseZAPI
+namespace SynapseZ
 {
     public class SynapseZAPI
     {
-
-
-        private string LatestErrorMsg = "";
+        private static string LatestErrorMsg = "";
 
         /**
          * Returns the latest error message from any action.
         */
-        public string GetLatestErrorMessage()
+        public static string GetLatestErrorMessage()
         {
             return LatestErrorMsg;
         }
@@ -28,7 +26,7 @@ namespace SynapseZAPI
          * 2 - Scheduler Folder not found
          * 3 - No access to write file
         */
-        public int Execute(string Script, int PID = 0)
+        public static int Execute(string Script, int PID = 0)
         {
             string MainPath = Path.Combine(Environment.ExpandEnvironmentVariables("%LOCALAPPDATA%"), "Synapse Z");
             string BinPath = Path.Combine(MainPath, "bin");
@@ -69,7 +67,7 @@ namespace SynapseZAPI
          * null - Could not find Account Key
          * null - API Error
         */
-        public Nullable<DateTime> GetExpireDate()
+        public static Nullable<DateTime> GetExpireDate()
         {
             String accKey = GetAccountKey();
 
@@ -84,7 +82,7 @@ namespace SynapseZAPI
             client.DefaultRequestHeaders.Add("key", accKey);
 
             HttpResponseMessage response = client.GetAsync("https://z-api.synapse.do/info").Result;
-            
+
             if (response.StatusCode.ToString() != "418")
             {
                 LatestErrorMsg = "API Error: " + response.StatusCode.ToString();
@@ -104,7 +102,7 @@ namespace SynapseZAPI
          * -2 - API Error
          * -3 - Invalid License
         */
-        public int Redeem(String license)
+        public static int Redeem(String license)
         {
             String accKey = GetAccountKey();
 
@@ -134,10 +132,10 @@ namespace SynapseZAPI
             }
 
             string responseBody = response.Content.ReadAsStringAsync().Result;
-            
+
             if (responseBody.StartsWith("Added"))
                 return 0;
-            
+
 
             LatestErrorMsg = "Invalid License";
             return -3;
@@ -151,7 +149,7 @@ namespace SynapseZAPI
          * -3 - Cooldown
          * -4 - Blacklisted
         */
-        public int ResetHwid()
+        public static int ResetHwid()
         {
             String accKey = GetAccountKey();
 
@@ -167,7 +165,7 @@ namespace SynapseZAPI
 
             HttpResponseMessage response = client.PostAsync("https://z-api.synapse.do/resethwid", null).Result;
 
-            switch(response.StatusCode.ToString())
+            switch (response.StatusCode.ToString())
             {
                 case "418":
                     return 0;
@@ -187,7 +185,7 @@ namespace SynapseZAPI
          * Return values:
          * System.Diagnostics.Process[] - Roblox Processes
         */
-        public System.Diagnostics.Process[] GetRobloxProcesses()
+        public static System.Diagnostics.Process[] GetRobloxProcesses()
         {
             return Process.GetProcessesByName("RobloxPlayerBeta");
         }
@@ -196,7 +194,7 @@ namespace SynapseZAPI
          * Return values:
          * List<Process> - SynZ Instances
         */
-        public List<Process> GetSynzRobloxInstances()
+        public static List<Process> GetSynzRobloxInstances()
         {
             Process[] processes = GetRobloxProcesses();
             List<Process> injectedProcesses = new List<Process>();
@@ -225,7 +223,7 @@ namespace SynapseZAPI
             * Return values:
             * bool - If the Instance is a SynZ Instance
         */
-        public Nullable<bool> IsSynz(int PID = 0)
+        public static Nullable<bool> IsSynz(int PID = 0)
         {
             List<Process> injectedProcesses = GetSynzRobloxInstances();
 
@@ -243,7 +241,7 @@ namespace SynapseZAPI
             * Return values:
             * bool - If all Roblox Instances are SynZ Instances
         */
-        public Nullable<bool> AreAllInstancesSynz()
+        public static Nullable<bool> AreAllInstancesSynz()
         {
             Process[] processes = GetRobloxProcesses();
             if (processes.Length == 0) return false;
@@ -251,7 +249,7 @@ namespace SynapseZAPI
             return GetSynzRobloxInstances().Count == processes.Length;
         }
 
-        public string GetAccountKey()
+        public static string GetAccountKey()
         {
             string path = Environment.ExpandEnvironmentVariables("%LOCALAPPDATA%\\auth_v2.syn");
 
@@ -265,7 +263,7 @@ namespace SynapseZAPI
          * Yeah you can ignore everything after this part
         */
         private static Random random = new Random();
-        
+
         // Generate the random string for File Name in Execute();
         private static string RandomString(int length)
         {
