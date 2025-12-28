@@ -50,7 +50,7 @@ function Execute(Script, PID) {
     if (typeof ExecutionPath === "number") {
         return ExecutionPath;
     }
-    fs.writeFileSync(ExecutionPath, Script);
+    fs.writeFileSync(ExecutionPath, Script + "@@FileFullyWritten@@");
     return 0;
 }
 /**
