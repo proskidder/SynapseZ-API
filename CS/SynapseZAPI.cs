@@ -204,7 +204,7 @@ namespace SynapseZ
                 Process process = processes[i];
                 string path = process.MainModule.FileName;
 
-                FileStream stream = File.Open(path, FileMode.Open);
+                FileStream stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                 byte[] array = new byte[0x600];
                 stream.BeginRead(array, 0, 0x600, null, null); // Read the first 600 bytes -> thats where the .grh section should be mentioned!
                 stream.Close();
