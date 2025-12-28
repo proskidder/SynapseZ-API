@@ -5,8 +5,7 @@ You might need to adjust it to make it work for your version.
 
 ## How to initialize:
 ```cs
-using SynapseZAPI;
-public SynapseZAPI.SynapseZAPI synapseZAPI = new SynapseZAPI.SynapseZAPI();
+using SynapseZ; // thats it lol
 ```
 
 ## How to inject:
@@ -24,17 +23,17 @@ public SynapseZAPI.SynapseZAPI synapseZAPI = new SynapseZAPI.SynapseZAPI();
  * 3 - No access to write file
 */
 
-synapseZAPI.Execute({{SCRIPTHERE}});
+SynapseZAPI.Execute({{SCRIPTHERE}});
 
 // OR IF YOU HAVE THE PID OF THE ROBLOX PROCESS:
 
-synapseZAPI.Execute({{SCRIPTHERE}}, {{PID}});
+SynapseZAPI.Execute({{SCRIPTHERE}}, {{PID}});
 ```
 
 ## Information:
 
 Incase you get an output which is not the desired output, to get the error msg associated with it, you can always use:
 ```cs
-GetLatestErrorMessage()
+SynapseZAPI.GetLatestErrorMessage()
 ```
 which will return the error message which was captured in any of those functions.
