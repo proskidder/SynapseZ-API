@@ -201,18 +201,9 @@ namespace SynapseZ
 
             for (int i = 0; i < processes.Length; i++)
             {
-                Process process = processes[i];
-                string path = process.MainModule.FileName;
-
-                FileStream stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                byte[] array = new byte[0x600];
-                stream.BeginRead(array, 0, 0x600, null, null); // Read the first 600 bytes -> thats where the .grh section should be mentioned!
-                stream.Close();
-
-                string fileContent = System.Text.Encoding.Default.GetString(array);
-                if (fileContent.Contains(".grh"))
+                if (IsSynz(processes[i].Id))
                 {
-                    injectedProcesses.Add(process);
+                    injectedProcesses.Add(processes[i]);
                 }
             }
 
@@ -225,16 +216,16 @@ namespace SynapseZ
         */
         public static bool IsSynz(int PID = 0)
         {
-            List<Process> injectedProcesses = GetSynzRobloxInstances();
+            Process process = Process.GetProcessById(PID);
+            string path = process.MainModule.FileName;
 
-            if (PID != 0)
-            {
-                return injectedProcesses.Exists((process) => process.Id == PID);
-            }
-            else
-            {
-                return injectedProcesses.Count != 0;
-            }
+            FileStream stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            byte[] array = new byte[0x600];
+            stream.BeginRead(array, 0, 0x600, null, null); // Read the first 600 bytes -> thats where the .grh section should be mentioned!
+            stream.Close();
+
+            string fileContent = System.Text.Encoding.Default.GetString(array);
+            return fileContent.Contains(".grh");
         }
 
         /**
