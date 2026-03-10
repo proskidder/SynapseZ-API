@@ -152,6 +152,42 @@ pub fn get_expire_date() -> Option<SystemTime> {
     Some(UNIX_EPOCH + Duration::from_secs(timestamp))
 }
 
+pub fn create_account(license: String, create_file: bool) -> Option<String> {
+    let client = Client::new();
+    let res = client.get("https://z-api.synapse.do/createaccount")
+        .header("license", license)
+        .header("hwid", "0")
+        .header("USER-AGENT", "SYNZ-SERVICE")
+        .send()
+        .ok()?;
+
+    if res.status() != StatusCode::IM_A_TEAPOT {
+        set_latest_error(&format!("API Error: {}", res.status()));
+        return None;
+    }
+
+    let text = res.text().ok()?;
+
+    if text.len() != 128 {
+        if text == "0" {
+            set_latest_error("Malformed License");
+        } else if text == "2" {
+            set_latest_error("License doesn't exist");
+        } else if text == "1" { // do this last because this is unlikely
+            set_latest_error("API Error: Server assumes HWID 0 is blacklisted");
+        }
+
+        return None;
+    }
+
+    if create_file {
+        fs::write(account_key_path(), &text).ok()?;
+    }
+
+    Some(text)
+}
+
+
 pub fn redeem(license: &str) -> i8 {
     let key = match get_account_key() {
         Some(k) => k,

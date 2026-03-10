@@ -183,6 +183,66 @@ namespace SynapseZ
 
         /**
          * Return values:
+         * Account Key (128 length) - Successfull
+         * "-1" - Malformed License
+         * "-2" - API Error
+         * "-3" - License doesn't exist
+        */
+        public static string CreateAccount(string license, bool createAccountKeyFile = true)
+        {
+            if (license == null || license == "" || license.Length != 128)
+            {
+                LatestErrorMsg = "Malformed License";
+                return "-1";
+            } 
+
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("User-Agent", "SYNZ-SERVICE");
+            client.DefaultRequestHeaders.Add("license", license);
+            client.DefaultRequestHeaders.Add("hwid", "0"); // HWID 0 so that the account key doesnt deleted automatically.
+
+            HttpResponseMessage response = client.PostAsync("https://z-api.synapse.do/createaccount", null).Result;
+
+            if (response.StatusCode.ToString() != "418")
+            {
+                LatestErrorMsg = "API Error: " + response.StatusCode.ToString();
+                return "-2";
+            }
+
+            string accKey = response.Content.ReadAsStringAsync().Result;
+
+            switch(accKey)
+            {
+                case "0":
+                    LatestErrorMsg = "Malformed License";
+                    return "-1";
+                case "1":
+                    LatestErrorMsg = "API Error: Server assumes HWID 0 is blacklisted";
+                    return "-2";
+                case "2":
+                    LatestErrorMsg = "License doesn't exist";
+                    return "-3";
+
+                default: break;
+            }
+
+            if (createAccountKeyFile)
+            {
+                string path = Environment.ExpandEnvironmentVariables("%LOCALAPPDATA%\\auth_v2.syn");
+
+                if (!Directory.Exists(Directory.GetParent(path).FullName))
+                {
+                    Directory.CreateDirectory(Directory.GetParent(path).FullName);
+                }
+
+                File.WriteAllText(path, accKey);
+            }
+
+            return accKey;
+        }
+
+        /**
+         * Return values:
          * System.Diagnostics.Process[] - Roblox Processes
         */
         public static System.Diagnostics.Process[] GetRobloxProcesses()
@@ -240,9 +300,14 @@ namespace SynapseZ
             return GetSynzRobloxInstances().Count == processes.Length;
         }
 
+        public static string GetAccountKeyPath()
+        {
+            return Environment.ExpandEnvironmentVariables("%LOCALAPPDATA%\\auth_v2.syn");
+        }
+
         public static string GetAccountKey()
         {
-            string path = Environment.ExpandEnvironmentVariables("%LOCALAPPDATA%\\auth_v2.syn");
+            string path = GetAccountKeyPath();
 
             if (!File.Exists(path))
                 return "";
