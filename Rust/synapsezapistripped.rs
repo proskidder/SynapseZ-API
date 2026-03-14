@@ -11,15 +11,6 @@ use std::thread;
 use std::time::Duration;
 use sysinfo::{Pid, Process, ProcessesToUpdate, System};
 
-use windows::core::PCSTR;
-use windows::Win32::Foundation::{CloseHandle, GENERIC_READ, GENERIC_WRITE, HANDLE, INVALID_HANDLE_VALUE};
-use windows::Win32::Storage::FileSystem::{
-    CreateFileA, ReadFile, WriteFile, FILE_ATTRIBUTE_NORMAL, FILE_SHARE_READ, FILE_SHARE_WRITE, OPEN_EXISTING,
-};
-use windows::Win32::System::Pipes::{
-    PeekNamedPipe, SetNamedPipeHandleState, WaitNamedPipeA, PIPE_READMODE_MESSAGE, PIPE_TYPE_MESSAGE,
-};
-
 lazy_static! {
     static ref LATEST_ERROR_MSG: Mutex<String> = Mutex::new(String::new());
 }
@@ -27,21 +18,6 @@ lazy_static! {
 fn set_error(msg: &str) {
     if let Ok(mut err) = LATEST_ERROR_MSG.lock() {
         *err = msg.to_string();
-    }
-}
-
-struct SafeHandle(HANDLE);
-
-impl SafeHandle {
-    fn get(&self) -> HANDLE { self.0 }
-    fn is_invalid(&self) -> bool { self.0.is_invalid() || self.0 == INVALID_HANDLE_VALUE }
-}
-
-impl Drop for SafeHandle {
-    fn drop(&mut self) {
-        if !self.is_invalid() {
-            unsafe { let _ = CloseHandle(self.0); }
-        }
     }
 }
 
