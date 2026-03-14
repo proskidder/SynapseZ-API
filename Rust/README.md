@@ -12,6 +12,8 @@ windows = { version = "0.62.2", features = ["Win32_System_Pipes"] }
 You might need to manually edit the api if you plan on using another version.
 If you are still using win-api, consider switching to windows since its officialy by microsoft.
 
+windows crate is not needed when using stripped version
+
 # Importing
 
 ```rust
