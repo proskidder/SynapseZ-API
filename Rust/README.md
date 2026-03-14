@@ -62,3 +62,11 @@ Here are the output types:
 2: warn
 3: error
 ```
+
+### How to execute (NEW API; USES SESSIONS)
+```rust
+SynapseZAPI2::execute({{SCRIPTHERE}}, 0);
+
+// OR IF YOU HAVE THE PID OF THE ROBLOX PROCESS:
+SynapseZAPI2::execute({{SCRIPTHERE}}, {{PID}});
+```

@@ -13,7 +13,7 @@ using SynapseZ; // thats it lol
 // u dont inject lol, its already injected when u run roblox
 ```
 
-## How to execute:
+## How to execute: (OLD API)
 ```cs
 /**
  * Return values:
@@ -83,4 +83,12 @@ Here are the output types:
 1: info
 2: warn
 3: error
+```
+
+## How to execute (NEW API; USES SESSIONS)
+```cs
+SynapseZAPI.Execute({{SCRIPTHERE}});
+
+// OR IF YOU HAVE THE PID OF THE ROBLOX PROCESS:
+SynapseZAPI.Execute({{SCRIPTHERE}}, {{PID}});
 ```
