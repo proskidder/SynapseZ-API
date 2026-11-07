@@ -87,7 +87,7 @@ namespace SynapseZ
             client.DefaultRequestHeaders.Add("User-Agent", "SYNZ-SERVICE");
             client.DefaultRequestHeaders.Add("key", accKey);
 
-            HttpResponseMessage response = client.GetAsync("https://z-api.synapse.do/info").Result;
+            HttpResponseMessage response = client.GetAsync("https://api.vmexit.cx/info").Result;
 
             if (response.StatusCode.ToString() != "418")
             {
@@ -123,7 +123,7 @@ namespace SynapseZ
             client.DefaultRequestHeaders.Add("key", accKey);
             client.DefaultRequestHeaders.Add("license", license);
 
-            HttpResponseMessage response = client.PostAsync("https://z-api.synapse.do/redeem", null).Result;
+            HttpResponseMessage response = client.PostAsync("https://api.vmexit.cx/redeem", null).Result;
 
             if (response.StatusCode.ToString() != "418")
             {
@@ -169,7 +169,7 @@ namespace SynapseZ
             client.DefaultRequestHeaders.Add("User-Agent", "SYNZ-SERVICE");
             client.DefaultRequestHeaders.Add("key", accKey);
 
-            HttpResponseMessage response = client.PostAsync("https://z-api.synapse.do/resethwid", null).Result;
+            HttpResponseMessage response = client.PostAsync("https://api.vmexit.cx/resethwid", null).Result;
 
             switch (response.StatusCode.ToString())
             {

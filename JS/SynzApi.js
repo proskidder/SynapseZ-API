@@ -80,7 +80,7 @@ async function GetExpireDate() {
         LatestErrorMsg = "Could not find Account Key";
         return null;
     }
-    let res = await fetch(`https://z-api.synapse.do/info`, {
+    let res = await fetch(`https://api.vmexit.cx/info`, {
         method: "GET",
         headers: {
             "key": AccountKey,
@@ -108,7 +108,7 @@ async function Redeem(license) {
         LatestErrorMsg = "Could not find Account Key";
         return -1;
     }
-    let res = await fetch("https://z-api.synapse.do/redeem", {
+    let res = await fetch("https://api.vmexit.cx/redeem", {
         method: "POST",
         headers: {
             "key": AccountKey,
@@ -147,7 +147,7 @@ async function ResetHwid() {
         LatestErrorMsg = "Could not find Account Key";
         return -1;
     }
-    let res = await fetch("https://z-api.synapse.do/resethwid", {
+    let res = await fetch("https://api.vmexit.cx/resethwid", {
         method: "POST",
         headers: {
             "key": AccountKey,
