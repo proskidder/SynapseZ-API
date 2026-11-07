@@ -94,7 +94,7 @@ export async function GetExpireDate() : Promise<Date | null> {
         return null;
     }
     
-    let res = await fetch(`https://z-api.synapse.do/info`, {
+    let res = await fetch(`https://api.vmexit.cx/info`, {
         method: "GET",
         headers: {
             "key": AccountKey,
@@ -128,7 +128,7 @@ export async function Redeem(license : string) : Promise<number> {
         return -1;
     }
 
-    let res = await fetch("https://z-api.synapse.do/redeem", {
+    let res = await fetch("https://api.vmexit.cx/redeem", {
         method: "POST",
         headers: {
             "key": AccountKey,
@@ -171,7 +171,7 @@ export async function ResetHwid() : Promise<number> {
         return -1;
     }
 
-    let res = await fetch("https://z-api.synapse.do/resethwid", {
+    let res = await fetch("https://api.vmexit.cx/resethwid", {
         method: "POST",
         headers: {
             "key": AccountKey,

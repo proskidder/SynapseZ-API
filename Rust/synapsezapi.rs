@@ -93,7 +93,7 @@ impl SynapseZAPI {
 
         let client = reqwest::blocking::Client::new();
         let res = client
-            .get("https://z-api.synapse.do/info")
+            .get("https://api.vmexit.cx/info")
             .header("User-Agent", "SYNZ-SERVICE")
             .header("key", &acc_key)
             .send();
@@ -130,7 +130,7 @@ impl SynapseZAPI {
 
         let client = reqwest::Client::new();
         let res = client
-            .get("https://z-api.synapse.do/info")
+            .get("https://api.vmexit.cx/info")
             .header("User-Agent", "SYNZ-SERVICE")
             .header("key", &acc_key)
             .send()
@@ -168,7 +168,7 @@ impl SynapseZAPI {
 
         let client = reqwest::blocking::Client::new();
         match client
-            .post("https://z-api.synapse.do/redeem")
+            .post("https://api.vmexit.cx/redeem")
             .header("User-Agent", "SYNZ-SERVICE")
             .header("key", &acc_key)
             .header("license", license)
@@ -209,7 +209,7 @@ impl SynapseZAPI {
 
         let client = reqwest::Client::new();
         match client
-            .post("https://z-api.synapse.do/redeem")
+            .post("https://api.vmexit.cx/redeem")
             .header("User-Agent", "SYNZ-SERVICE")
             .header("key", &acc_key)
             .header("license", license)
@@ -251,7 +251,7 @@ impl SynapseZAPI {
 
         let client = reqwest::blocking::Client::new();
         match client
-            .post("https://z-api.synapse.do/resethwid")
+            .post("https://api.vmexit.cx/resethwid")
             .header("User-Agent", "SYNZ-SERVICE")
             .header("key", &acc_key)
             .send()
@@ -278,7 +278,7 @@ impl SynapseZAPI {
 
         let client = reqwest::Client::new();
         match client
-            .post("https://z-api.synapse.do/resethwid")
+            .post("https://api.vmexit.cx/resethwid")
             .header("User-Agent", "SYNZ-SERVICE")
             .header("key", &acc_key)
             .send()
